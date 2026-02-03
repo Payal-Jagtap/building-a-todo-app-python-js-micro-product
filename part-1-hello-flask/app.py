@@ -37,16 +37,30 @@ def contact():
     """Contact page - contact information"""
     return render_template('contact.html')
 
+@app.route('/services')
+def services():
+    """Services page - information about our services"""
+    return render_template('services.html')
 
+@app.route('/plain-text')
+def plain_text():
+    """Route that returns plain text instead of HTML"""
+    return "Hello World - This is plain text returned directly from Flask!"
+
+
+@app.route('/hello/<name>')
+def hello(name):
+    """Dynamic route that greets the user by name"""
+    return f"Hello, {name}! Welcome to our Todo App!"
 # =============================================================================
 # RUN THE SERVER
 # =============================================================================
 if __name__ == '__main__':
     print("\n" + "="*50)
     print("  Part 1: Hello Flask")
-    print("  Open: http://127.0.0.1:5000")
+    print("  Open: http://127.0.0.1:8080")
     print("="*50 + "\n")
-    app.run(debug=True)
+    app.run(debug=True,port=8080)
 
 
 # ============================================
