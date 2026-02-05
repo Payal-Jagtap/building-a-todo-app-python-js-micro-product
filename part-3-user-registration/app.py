@@ -66,6 +66,19 @@ def api_register():
     if not username or not email or not password:
         return jsonify({'error': 'All fields are required'}), 400
 
+    # Activity 1: Password validation - check if password length < 6
+    if len(password) < 6:
+        return jsonify({'error': 'Password must be at least 6 characters long'}), 400
+
+    # Activity 2: Username validation - check if username contains only letters and numbers
+    if not username.isalnum():
+        return jsonify({'error': 'Username must contain only letters and numbers'}), 400
+
+    # Activity 4: Email format check - BETTER IMPLEMENTATION
+    if '@' not in email or '.' not in email.split('@')[-1]:
+        return jsonify({'error': 'Invalid email format'}), 400
+    
+
     # Check if user already exists
     if User.query.filter_by(email=email).first():
         return jsonify({'error': 'Email already registered'}), 400

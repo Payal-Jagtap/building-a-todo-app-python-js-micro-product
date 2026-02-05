@@ -35,6 +35,7 @@
                                     <th>ID</th>
                                     <th>Username</th>
                                     <th>Email</th>
+                                    <th>Phone</th>  <!-- NEW COLUMN -->
                                     <th>Is Admin</th>
                                     <th>Todo Count</th>
                                 </tr>
@@ -45,6 +46,7 @@
                                     <td>{{ user.id }}</td>
                                     <td>{{ user.username }}</td>
                                     <td>{{ user.email }}</td>
+                                    <td>{{ user.phone if user.phone else 'N/A' }}</td>  <!-- NEW COLUMN -->
                                     <td>{{ user.is_admin }}</td>
                                     <td>{{ user.todos|length }}</td>
                                 </tr>
