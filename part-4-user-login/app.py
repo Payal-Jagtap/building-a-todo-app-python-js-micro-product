@@ -5,6 +5,7 @@
 from flask import Flask, render_template, request, jsonify
 from models import db, User, init_db
 from auth import hash_password, verify_password, create_token
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -86,6 +87,15 @@ def api_login():
 
     email = data.get('email')
     password = data.get('password')
+    remember_me = data.get('remember_me', False)
+
+    # ACTIVITY 4: Login attempt logging
+    print(f"\n{'='*50}")
+    print("LOGIN ATTEMPT")
+    print(f"{'='*50}")
+    print(f"Time: {datetime.now()}")
+    print(f"Email: {email}")
+    print(f"Remember me: {remember_me}")
 
     if not email or not password:
         return jsonify({'error': 'Email and password required'}), 400
@@ -95,7 +105,22 @@ def api_login():
     if not user or not verify_password(user.password_hash, password):  # Check password
         return jsonify({'error': 'Invalid email or password'}), 401  # 401 = Unauthorized
 
-    token = create_token(user.id, user.is_admin)  # Create JWT token
+     # ACTIVITY 3: Determine token expiration based on remember_me
+    if remember_me:
+        token_expiration_hours = 24 * 30  # 30 days = 720 hours
+        expiration_description = "30 days"
+    else:
+        token_expiration_hours = 1  # 1 hour
+        expiration_description = "1 hour"
+
+    token = create_token(user.id, user.is_admin,token_expiration_hours)  # Create JWT token
+
+    # ACTIVITY 4: Log success
+    print(f"Status: SUCCESS")
+    print(f"User ID: {user.id}")
+    print(f"Username: {user.username}")
+    print(f"Token expiration: {expiration_description}")
+    print(f"{'='*50}")
 
     return jsonify({
         'message': 'Login successful!',

@@ -36,6 +36,13 @@
                                 <label class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" required>
                             </div>
+                            <!-- ACTIVITY 3: Add remember_me checkbox -->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="remember_me">
+                                <label class="form-check-label" for="remember_me">
+                                    Remember me for 30 days
+                                </label>
+                            </div>
                             <button type="submit" class="btn btn-primary w-100">Login</button>
                         </form>
 
@@ -56,12 +63,12 @@
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
+            const remember_me = document.getElementById('remember_me').checked; // ACTIVITY 3: Get checkbox value
             try {
                 const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ email, password, remember_me }) // ACTIVITY 3: Send remember_me value to server
                 });
 
                 const data = await response.json();

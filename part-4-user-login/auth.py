@@ -15,7 +15,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 SECRET_KEY = "your-secret-key-change-in-production"
 
 # Token expires after 24 hours
-TOKEN_EXPIRATION_HOURS = 24
+TOKEN_EXPIRATION_HOURS = 0.001
 
 
 # =============================================================================
@@ -58,6 +58,8 @@ def create_token(user_id, is_admin=False):
 
     The token is sent to the client and stored in localStorage.
     """
+    if expiration_hours is None:
+        expiration_hours = TOKEN_EXPIRATION_HOURS
     payload = {
         'user_id': user_id,
         'is_admin': is_admin,
